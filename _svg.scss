@@ -1,0 +1,181 @@
+/*----------------------------------------*\
+    SVG Pattern
+\*----------------------------------------*/
+
+$fallback-svg-fixed-height: 100px !default;
+
+
+
+/*
+    1. Make the link fit the content.
+    2. Provide positioning context for the pseudo element.
+    3. Remove underline on some older browsers (Android 2.x mainly)
+    4. Prevent fallback text from showing unless image fails to load.
+*/
+.svg__link {
+    display: inline-block; /* [1] */
+    position: relative;    /* [2] */
+    text-decoration: none; /* [3] */
+    overflow: hidden;      /* [4] */
+}
+
+/*
+    Objects inside links prevent the link from functioning, this hack fixes 
+    that. `pointer-events: none;` would solve it but support isn't good 
+    enough (http://caniuse.com/#search=pointer-events).
+    
+    1. This is needed for IE9+ or hover effects don't work over images 
+       embedded in the SVG.
+*/
+.svg__link:after {
+    content: ""; 
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0); /* [1] */
+}
+
+/*
+    1. Remove gap below.
+    2. Prevent pointer-events blocking link action in supporting browsers.
+*/
+.svg__link .svg__image {
+    vertical-align: top;  /* [1] */
+    pointer-events: none; /* [2] */
+}
+
+
+/*------ Fixed Height ------*/
+/*
+    Set this to your required height.
+    If you need more variants, create separate modification classes instead.
+*/
+.svg--fixed-height,
+.svg--fixed-height .svg__link,
+.svg--fixed-height .svg__image {
+    height: $fallback-svg-fixed-height;
+}
+
+/*
+    1. Allow pattern to contract.
+*/
+.svg--fixed-height .svg__link,
+.svg--fixed-height .svg__image {
+    max-width: 100%; /* [1] */
+}
+
+/*
+    Allow the fallback image to scale properly.
+    1. IE6 - can be removed if unnecessary.
+*/
+.svg--fixed-height .svg__fallback-image {
+
+    max-width: 100%;
+    max-height: $fallback-svg-fixed-height;
+    height: auto;
+    _height: $fallback-svg-fixed-height; /* [1] */
+}
+
+/*
+    1. Force fallback text below object.
+    2. Reduce font size to prevent it forcing the container wider than the 
+       object at smaller sizes. This is opinionated change as you see fit.
+*/
+.svg--fixed-height .svg__fallback-text {
+    display: block;   /* [1] */
+    font-size: 0.6em; /* [2] */
+}
+
+
+/*------ Fluid ------*/
+/*
+   1. Force the svg wrapper and link to fill their containers.
+*/
+.svg--fluid,
+.svg--fluid .svg__link {
+    display: block; /* [1] */
+    height: 100%;   /* [1] */
+    width: 100%;    /* [1] */
+}
+
+/*
+    1. Force the children (object and fallback) text onto a single line. 
+       Note they must be inline-block.
+*/
+.svg--fluid .svg__link {
+    white-space: nowrap; /* [1] */
+}
+
+/*
+   1. Force the object and fallback image to proportionally fill their 
+      containers, overriding attribute values.
+*/
+.svg--fluid .svg__image,
+.svg--fluid .svg__fallback-image {
+    height: auto; /* [1] */
+    width: 100%;  /* [1] */
+}
+
+/*
+    1. Make the fallback text inline-block so it is forced to the right of the object.
+       This hides it unless the image fails (in which case it collapses to the width of the text 
+       that's revealed).
+    2. Reset the white-space to is can form line-breaks.
+*/
+.svg--fluid .svg__fallback-text {
+    display: inline-block; /* [1] */
+    white-space: normal;   /* [2] */
+}
+
+
+/*----------------------------------------*\
+    Old Browser Hacks - Optional
+\*----------------------------------------*/
+   
+/* IE8- hacks: */
+@media \0screen\,screen\9 {
+    /*
+        PNG fallbacks also show the text (which isn't what we want), but we
+        don't need it as it has `alt` text, so just hide it.
+    */
+    .svg--fixed-height .svg__fallback-text,
+    .svg--fluid .svg__fallback-text {
+        display: none;
+    }
+}
+
+/* Old Android (2.3) hacks: */
+@media screen and (min-width:0\-) {
+    /*
+        PNG fallbacks also show the text (which isn't what we want), but we
+        don't need it as it has `alt` text, so just hide it.
+    */
+    .svg--fixed-height .svg__fallback-text,
+    .svg--fluid .svg__fallback-text {
+        display: none;
+    }
+}
+
+
+
+/*------ Fixed Height - small variant ------*/
+/*
+    Set this to your required height.
+    If you need more variants, create separate modification classes instead.
+*/
+.svg--fixed-height--small,
+.svg--fixed-height--small .svg__link,
+.svg--fixed-height--small .svg__image {
+    height: 50px;
+}
+
+/*
+    Allow the fallback image to scale properly.
+    1. IE6 - can be removed if unnecessary.
+*/
+.svg--fixed-height--small .svg__fallback-image {
+    max-height: 50px;
+    _height: 50px; /* [1] */
+}
