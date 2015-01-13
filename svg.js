@@ -1,3 +1,7 @@
+/*
+    Fix CSS shortcomings in older browsers. Specifically fix the width of the objects container
+    to be the same width as the object.
+*/
 window.onload = function() {
     if (!(
         document.body.style.msTouchAction !== undefined /* IE10+ */
