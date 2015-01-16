@@ -52,11 +52,23 @@ $fallback-svg-fixed-height: 100px !default;
     Set this to your required height.
     If you need more variants, create separate modification classes instead.
 */
-.svg--fixed-height,
-.svg--fixed-height .svg__link,
-.svg--fixed-height .svg__image {
-    height: $fallback-svg-fixed-height;
+@mixin svg--fixed-height($height, $name:"") {
+    .svg--fixed-height#{$name},
+    .svg--fixed-height#{$name} .svg__link,
+    .svg--fixed-height#{$name} .svg__image {
+        height: $height;
+    }
+    
+    /*
+        Allow the fallback image to scale properly.
+        1. IE6 - can be removed if unnecessary.
+    */
+    .svg--fixed-height#{$name} .svg__fallback-image {
+        max-height: $height;
+        _height: $height; /* [1] */
+    }
 }
+
 
 /*
     1. Allow pattern to contract.
@@ -66,16 +78,9 @@ $fallback-svg-fixed-height: 100px !default;
     max-width: 100%; /* [1] */
 }
 
-/*
-    Allow the fallback image to scale properly.
-    1. IE6 - can be removed if unnecessary.
-*/
 .svg--fixed-height .svg__fallback-image {
-
     max-width: 100%;
-    max-height: $fallback-svg-fixed-height;
     height: auto;
-    _height: $fallback-svg-fixed-height; /* [1] */
 }
 
 /*
@@ -88,6 +93,7 @@ $fallback-svg-fixed-height: 100px !default;
     font-size: 0.6em; /* [2] */
 }
 
+@include svg--fixed-height($fallback-svg-fixed-height);
 
 /*------ Fluid ------*/
 /*
@@ -158,24 +164,3 @@ $fallback-svg-fixed-height: 100px !default;
     }
 }
 
-
-
-/*------ Fixed Height - small variant ------*/
-/*
-    Set this to your required height.
-    If you need more variants, create separate modification classes instead.
-*/
-.svg--fixed-height--small,
-.svg--fixed-height--small .svg__link,
-.svg--fixed-height--small .svg__image {
-    height: 50px;
-}
-
-/*
-    Allow the fallback image to scale properly.
-    1. IE6 - can be removed if unnecessary.
-*/
-.svg--fixed-height--small .svg__fallback-image {
-    max-height: 50px;
-    _height: 50px; /* [1] */
-}
