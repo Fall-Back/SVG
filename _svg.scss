@@ -46,6 +46,13 @@ $fallback-svg-fixed-height: 100px !default;
     pointer-events: none; /* [2] */
 }
 
+/*
+    1. The br is only useful for non-css fallback display, so we can hide it.
+*/
+.svg__link br {
+    display: none; /* [1] */
+}
+
 
 /*------ Fixed Height ------*/
 /*
