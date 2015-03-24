@@ -53,6 +53,13 @@ $fallback-svg-fixed-height: 100px !default;
     display: none; /* [1] */
 }
 
+/*
+    1. But we need to be able to insert line breaks inside the text to prevent 
+       the text from pushing the container to wide.
+*/
+.svg__fallback-text br {
+    display: inline; /* [1] */
+}
 
 /*------ Fixed Height ------*/
 /*
@@ -135,7 +142,7 @@ $fallback-svg-fixed-height: 100px !default;
     1. Make the fallback text inline-block so it is forced to the right of the object.
        This hides it unless the image fails (in which case it collapses to the width of the text 
        that's revealed).
-    2. Reset the white-space to is can form line-breaks.
+    2. Reset the white-space so it can form line-breaks.
 */
 .svg--fluid .svg__fallback-text {
     display: inline-block; /* [1] */
