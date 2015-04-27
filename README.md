@@ -23,4 +23,4 @@ HTML:
 To Do
 -----
 
-Since I'm moving to using Modernizr - the hacks could/should be re-factored to use feature tests.
+* Since I'm moving to using Modernizr - the hacks could/should be re-factored to use feature tests.
