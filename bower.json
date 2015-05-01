@@ -7,9 +7,9 @@
     ],
     "description": "A pattern to include SVG's in the best possible way without penalising any particular user group.",
     "main": "_svg.scss",
+    "ignore":[],
     "keywords": [
         "fallback",
-        "fallbacks",
         "css",
         "svg"
     ],
