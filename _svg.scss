@@ -65,10 +65,10 @@ $fallback-svg-fixed-height: 100px !default;
     Set this to your required height.
     If you need more variants, create separate modification classes instead.
 */
-@mixin svg--fixed-height($height, $name:"") {
-    .svg--fixed-height#{$name},
-    .svg--fixed-height#{$name} .svg__link,
-    .svg--fixed-height#{$name} .svg__image {
+@mixin svg--fixed-height($height, $name:"svg--fixed-height") {
+    .#{$name},
+    .#{$name} .svg__link,
+    .#{$name} .svg__image {
         height: $height;
     }
     
@@ -76,7 +76,7 @@ $fallback-svg-fixed-height: 100px !default;
         Allow the fallback image to scale properly.
         1. IE6 - can be removed if unnecessary.
     */
-    .svg--fixed-height#{$name} .svg__fallback-image {
+    .#{$name} .svg__fallback-image {
         max-height: $height;
         _height: $height; /* [1] */
     }
