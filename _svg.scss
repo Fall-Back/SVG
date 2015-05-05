@@ -2,8 +2,13 @@
     SVG Pattern
 \*------------------------------------------------------------------------------------------------*/
 
-$fallback-svg-fixed-height: 100px !default;
+$fallback-svg--fixed-height:  100px !default;
 
+// Set to null if you don't want to use this:
+$fallback-svg--text-width:    null !default;
+
+// Set to null if you don't want to use this:
+$fallback-svg--text-fontsize: null !default;
 
 /*
     1. Make the link fit the content.
@@ -53,7 +58,7 @@ $fallback-svg-fixed-height: 100px !default;
 }
 
 /*
-    1. But we need to be able to insert line breaks inside the text to prevent 
+    1. But we may need to be able to insert line breaks inside the text to prevent 
        the text from pushing the container to wide.
 */
 .svg__fallback-text br {
@@ -98,15 +103,29 @@ $fallback-svg-fixed-height: 100px !default;
 
 /*
     1. Force fallback text below object.
-    2. Reduce font size to prevent it forcing the container wider than the 
-       object at smaller sizes. This is opinionated change as you see fit.
+    2. A problem with this technique arises if the fallback text is quite long. For the 
+       fixed-height version of the SVG fallback pattern, long fallback text forces the parent 
+       link to be wider than the SVG image.
+       If this problem occurs try you'll need to either reduce the line-length by reducing the 
+       font-size or adding `<br>`s in the fallback text, or assign a width to the 
+       `.svg__fallback-text` class that you know to be small enough to force the text to wrap.
 */
 .svg--fixed-height .svg__fallback-text {
-    display: block;   /* [1] */
-    font-size: 0.6em; /* [2] */
+    display: block; /* [1] */
+    
+    @if $fallback-svg--text-width != null {
+    width: $fallback-svg--text-width;    /* [2] */
+    }
+    
+    @if $fallback-svg--text-fontsize != null {
+    width: $fallback-svg--text-fontsize; /* [2] */
+    }
 }
 
-@include svg--fixed-height($fallback-svg-fixed-height);
+@include svg--fixed-height($fallback-svg--fixed-height);
+
+
+
 
 /*------ Fluid ------*/
 /*
@@ -158,6 +177,7 @@ $fallback-svg-fixed-height: 100px !default;
     /*
         PNG fallbacks also show the text (which isn't what we want), but we
         don't need it as it has `alt` text, so just hide it.
+        Overqualified to increase specificity.
     */
     .svg--fixed-height .svg__fallback-text,
     .svg--fluid .svg__fallback-text {
@@ -170,6 +190,7 @@ $fallback-svg-fixed-height: 100px !default;
     /*
         PNG fallbacks also show the text (which isn't what we want), but we
         don't need it as it has `alt` text, so just hide it.
+        Overqualified to increase specificity.
     */
     .svg--fixed-height .svg__fallback-text,
     .svg--fluid .svg__fallback-text {
