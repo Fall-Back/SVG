@@ -1,5 +1,5 @@
 {
-    "name": "fallback-svg",
+    "name": "FallBack-SVG",
     "version": "0.1.1",
     "homepage": "https://github.com/Fall-Back/SVG",
     "authors": [
@@ -7,7 +7,7 @@
     ],
     "description": "A pattern to include SVG's in the best possible way without penalising any particular user group.",
     "main": "_svg.scss",
-    "ignore":[],
+    "ignore": [],
     "keywords": [
         "fallback",
         "css",
