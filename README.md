@@ -11,10 +11,10 @@ HTML:
     <a href="#" class="svg__link">
         <object type="image/svg+xml" data="your-logo.svg" height="170" class="svg__image" aria-hidden="true" tabindex="-1">
             <svg display="none">
-                <image src="your-logo.png" height="170" class="svg__fallback-image" alt="FallBack text" />
+                <image src="your-logo.png" height="170" class="svg__fallback-image" alt="Fall-Back text" />
             </svg>
         </object>
-       <br /><i class="svg__fallback-text">FallBack text</i>
+       <br /><i class="svg__fallback-text">Fall-Back text</i>
     </a>
 </div>
 ~~~~~~~~
