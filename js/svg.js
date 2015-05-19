@@ -3,13 +3,15 @@
     to be the same width as the object.
 */
 window.onload = function() {
+
     if (!(
-        document.body.style.msTouchAction !== undefined /* IE10+ */
+        document.body.style.msTouchSelect !== undefined /* IE10+ */
      || (document.all && document.addEventListener && !window.atob) /* IE9 */
      || Object.prototype.toString.call(window.operamini) === '[object OperaMini]' /* Opera Mini */
     )) {
         return;
     }
+    console.log('Applying inline-block fix');
 
     var objs = document.getElementsByTagName('object');
     var i = 0
@@ -30,4 +32,5 @@ window.onload = function() {
         obj.parentNode.style.width  = obj.offsetWidth + 'px';
         obj.style.maxWidth          = '100%';
     }
+    
 }
