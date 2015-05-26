@@ -2,13 +2,30 @@
     SVG Pattern
 \*------------------------------------------------------------------------------------------------*/
 
-$fallback-svg--fixed-height:  100px !default;
+$fallback-svg--fixed-height:      100px !default;
+
+
+$fallback-svg--padding:           0 !default;
+//$fallback-svg--padding:           10px !default;
+
+
+
+$fallback-svg--border-width:      0 !default;
+$fallback-svg--border-style:      solid !default;
+$fallback-svg--border-color:      #333 !default;
+//$fallback-svg--border-width:      1px !default;
+
+
+
+$fallback-svg--link-bg-color:     transparent !default;
+$fallback-svg--link-bg-color-alt: transparent !default;
+
 
 // Set to null if you don't want to use this:
-$fallback-svg--text-width:    null !default;
+$fallback-svg--text-width:        null !default;
 
 // Set to null if you don't want to use this:
-$fallback-svg--text-fontsize: null !default;
+$fallback-svg--text-fontsize:     null !default;
 
 /*
     1. Make the link fit the content.
@@ -21,6 +38,20 @@ $fallback-svg--text-fontsize: null !default;
     position: relative;    /* [2] */
     text-decoration: none; /* [3] */
     overflow: hidden;      /* [4] */
+    
+    @if $fallback-svg--border-width > 0 {
+        border-width: $fallback-svg--border-width;
+        border-style: $fallback-svg--border-style;
+        border-color: $fallback-svg--border-color;
+    }
+    
+    background-color: $fallback-svg--link-bg-color;
+}
+
+.svg-logo .svg__link:hover,
+.svg-logo .svg__link:active,
+.svg-logo .svg__link:focus {
+    background-color: $fallback-svg--link-bg-color-alt;
 }
 
 /*
@@ -39,6 +70,10 @@ $fallback-svg--text-fontsize: null !default;
     bottom: 0;
     left: 0;
     background: rgba(0,0,0,0); /* [1] */
+}
+
+.svg__link:hover {
+    text-decoration: none;
 }
 
 /*
@@ -70,11 +105,35 @@ $fallback-svg--text-fontsize: null !default;
     Set this to your required height.
     If you need more variants, create separate modification classes instead.
 */
-@mixin svg--fixed-height($height, $name:"svg--fixed-height") {
-    .#{$name},
-    .#{$name} .svg__link,
-    .#{$name} .svg__image {
-        height: $height;
+@mixin svg--fixed-height($height, $name:"svg--fixed-height", $padding:$fallback-svg--padding, $border:$fallback-svg--border-width) {
+    @if $padding > 0 {
+    
+        .#{$name} {
+            height: $height;
+        }
+
+        $height: $height - ($padding * 2) - ($border * 2);
+        
+        .#{$name} .svg__link,
+        .#{$name} .svg__image {
+            height: $height;
+        }
+        
+        .#{$name} .svg__link {
+            padding: $padding;
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+        
+    } @else {
+    
+        .#{$name},
+        .#{$name} .svg__link,
+        .#{$name} .svg__image {
+            height: $height;
+        }
+        
     }
     
     /*
@@ -114,11 +173,16 @@ $fallback-svg--text-fontsize: null !default;
     display: block; /* [1] */
     
     @if $fallback-svg--text-width != null {
-    width: $fallback-svg--text-width;    /* [2] */
+        width: $fallback-svg--text-width;    /* [2] */
     }
     
     @if $fallback-svg--text-fontsize != null {
-    width: $fallback-svg--text-fontsize; /* [2] */
+        font-size: $fallback-svg--text-fontsize; /* [2] */
+    }
+    
+    @if $fallback-svg--padding > 0 {
+        position: relative;
+        bottom: -$fallback-svg--padding;
     }
 }
 
@@ -144,6 +208,13 @@ $fallback-svg--text-fontsize: null !default;
 */
 .svg--fluid .svg__link {
     white-space: nowrap; /* [1] */
+    
+    @if $fallback-svg--padding > 0 {
+        padding: $fallback-svg--padding;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 }
 
 /*
@@ -165,6 +236,11 @@ $fallback-svg--text-fontsize: null !default;
 .svg--fluid .svg__fallback-text {
     display: inline-block; /* [1] */
     white-space: normal;   /* [2] */
+    
+    @if $fallback-svg--padding > 0 {
+        position: relative;
+        left: $fallback-svg--padding;
+    }
 }
 
 
