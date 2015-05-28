@@ -3,3 +3,4 @@ bower_components/
 svg.css
 svg.scss
 js/*.min.js
+*.css.map
