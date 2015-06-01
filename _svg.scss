@@ -108,6 +108,7 @@ $fallback-svg--text-fontsize:     null !default;
     
         .#{$name} {
             height: $height;
+            max-height: $height;
         }
 
         $height: $height - ($padding * 2) - ($border * 2);
@@ -115,6 +116,7 @@ $fallback-svg--text-fontsize:     null !default;
         .#{$name} .svg__link,
         .#{$name} .svg__image {
             height: $height;
+            max-height: $height;
         }
         
         .#{$name} .svg__link {
@@ -130,6 +132,7 @@ $fallback-svg--text-fontsize:     null !default;
         .#{$name} .svg__link,
         .#{$name} .svg__image {
             height: $height;
+            max-height: $height;
         }
         
     }
@@ -142,14 +145,7 @@ $fallback-svg--text-fontsize:     null !default;
         max-height: $height;
         _height: $height; /* [1] */
     }
-    
-    /*
-        Overflow doesn't work as expected in old Opera Mobile, so provide clip as well.
-    */
-    .svg--fixed-height .svg__link {
-        position: absolute;
-        clip: rect(0, auto, $height, 0);
-    }
+
 }
 
 
