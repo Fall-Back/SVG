@@ -48,9 +48,10 @@ $fallback-svg--text-fontsize:     null !default;
     background-color: $fallback-svg--link-bg-color;
 }
 
-.svg-logo .svg__link:hover,
-.svg-logo .svg__link:active,
-.svg-logo .svg__link:focus {
+.svg__link:hover,
+.svg__link:active,
+.svg__link:focus {
+    text-decoration: none;
     background-color: $fallback-svg--link-bg-color-alt;
 }
 
@@ -72,9 +73,6 @@ $fallback-svg--text-fontsize:     null !default;
     background: rgba(0,0,0,0); /* [1] */
 }
 
-.svg__link:hover {
-    text-decoration: none;
-}
 
 /*
     1. Remove gap below.
