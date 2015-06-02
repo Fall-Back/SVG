@@ -39,13 +39,13 @@ $fallback-svg--text-fontsize:     null !default;
     text-decoration: none; /* [3] */
     overflow: hidden;      /* [4] */
     
+    background-color: $fallback-svg--link-bg-color;
+    
     @if $fallback-svg--border-width > 0 {
         border-width: $fallback-svg--border-width;
         border-style: $fallback-svg--border-style;
         border-color: $fallback-svg--border-color;
     }
-    
-    background-color: $fallback-svg--link-bg-color;
 }
 
 .svg__link:hover,
