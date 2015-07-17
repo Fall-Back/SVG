@@ -145,105 +145,107 @@ $fallback-svg--text-fontsize:     null !default;
         max-height: $height;
         _height: $height; /* [1] */
     }
-
-}
-
-
-/*
-    1. Allow pattern to contract.
-*/
-.svg--fixed-height .svg__link,
-.svg--fixed-height .svg__image {
-    max-width: 100%; /* [1] */
-}
-
-.svg--fixed-height .svg__fallback-image {
-    max-width: 100%;
-    height: auto;
-}
-
-/*
-    1. Force fallback text below object.
-    2. A problem with this technique arises if the fallback text is quite long. For the 
-       fixed-height version of the SVG fallback pattern, long fallback text forces the parent 
-       link to be wider than the SVG image.
-       If this problem occurs try you'll need to either reduce the line-length by reducing the 
-       font-size or adding `<br>`s in the fallback text, or assign a width to the 
-       `.svg__fallback-text` class that you know to be small enough to force the text to wrap.
-*/
-.svg--fixed-height .svg__fallback-text {
-    display: block; /* [1] */
     
-    @if $fallback-svg--text-width != null {
-        width: $fallback-svg--text-width;    /* [2] */
+    
+    /*
+        1. Allow pattern to contract.
+    */
+    .#{$name} .svg__link,
+    .#{$name} .svg__image {
+        max-width: 100%; /* [1] */
     }
-    
-    @if $fallback-svg--text-fontsize != null {
-        font-size: $fallback-svg--text-fontsize; /* [2] */
+
+    .#{$name} .svg__fallback-image {
+        max-width: 100%;
+        height: auto;
     }
-    
-    @if $fallback-svg--padding > 0 {
-        position: relative;
-        bottom: -$fallback-svg--padding;
+
+    /*
+        1. Force fallback text below object.
+        2. A problem with this technique arises if the fallback text is quite long. For the 
+           fixed-height version of the SVG fallback pattern, long fallback text forces the parent 
+           link to be wider than the SVG image.
+           If this problem occurs try you'll need to either reduce the line-length by reducing the 
+           font-size or adding `<br>`s in the fallback text, or assign a width to the 
+           `.svg__fallback-text` class that you know to be small enough to force the text to wrap.
+    */
+    .#{$name} .svg__fallback-text {
+        display: block; /* [1] */
+        
+        @if $fallback-svg--text-width != null {
+            width: $fallback-svg--text-width;    /* [2] */
+        }
+        
+        @if $fallback-svg--text-fontsize != null {
+            font-size: $fallback-svg--text-fontsize; /* [2] */
+        }
+        
+        @if $fallback-svg--padding > 0 {
+            position: relative;
+            bottom: -$fallback-svg--padding;
+        }
     }
 }
 
 @include svg--fixed-height($fallback-svg--fixed-height);
 
 
-
-
 /*------ Fluid ------*/
-/*
-   1. Force the svg wrapper and link to fill their containers.
-*/
-.svg--fluid,
-.svg--fluid .svg__link {
-    display: block; /* [1] */
-    height: 100%;   /* [1] */
-    width: 100%;    /* [1] */
-}
+//@mixin svg-fluid($height, $name:"svg--fixed-height", $padding:$fallback-svg--padding, $border:$fallback-svg--border-width) {
+@mixin svg--fluid($name:"svg--fluid") {
+    /*
+       1. Force the svg wrapper and link to fill their containers.
+    */
+    .#{$name},
+    .#{$name} .svg__link {
+        display: block; /* [1] */
+        height: 100%;   /* [1] */
+        width: 100%;    /* [1] */
+    }
 
-/*
-    1. Force the children (object and fallback) text onto a single line. 
-       Note they must be inline-block.
-*/
-.svg--fluid .svg__link {
-    white-space: nowrap; /* [1] */
-    
-    @if $fallback-svg--padding > 0 {
-        padding: $fallback-svg--padding;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
+    /*
+        1. Force the children (object and fallback) text onto a single line. 
+           Note they must be inline-block.
+    */
+    .#{$name} .svg__link {
+        white-space: nowrap; /* [1] */
+        
+        @if $fallback-svg--padding > 0 {
+            padding: $fallback-svg--padding;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+    }
+
+    /*
+       1. Force the object and fallback image to proportionally fill their 
+          containers, overriding attribute values.
+    */
+    .#{$name} .svg__image,
+    .#{$name} .svg__fallback-image {
+        height: auto; /* [1] */
+        width: 100%;  /* [1] */
+    }
+
+    /*
+        1. Make the fallback text inline-block so it is forced to the right of the object.
+           This hides it unless the image fails (in which case it collapses to the width of the text 
+           that's revealed).
+        2. Reset the white-space so it can form line-breaks.
+    */
+    .#{$name} .svg__fallback-text {
+        display: inline-block; /* [1] */
+        white-space: normal;   /* [2] */
+        
+        @if $fallback-svg--padding > 0 {
+            position: relative;
+            left: $fallback-svg--padding;
+        }
     }
 }
 
-/*
-   1. Force the object and fallback image to proportionally fill their 
-      containers, overriding attribute values.
-*/
-.svg--fluid .svg__image,
-.svg--fluid .svg__fallback-image {
-    height: auto; /* [1] */
-    width: 100%;  /* [1] */
-}
-
-/*
-    1. Make the fallback text inline-block so it is forced to the right of the object.
-       This hides it unless the image fails (in which case it collapses to the width of the text 
-       that's revealed).
-    2. Reset the white-space so it can form line-breaks.
-*/
-.svg--fluid .svg__fallback-text {
-    display: inline-block; /* [1] */
-    white-space: normal;   /* [2] */
-    
-    @if $fallback-svg--padding > 0 {
-        position: relative;
-        left: $fallback-svg--padding;
-    }
-}
+@include svg--fluid();
 
 
 /*----------------------------------------*\
@@ -257,8 +259,7 @@ $fallback-svg--text-fontsize:     null !default;
         don't need it as it has `alt` text, so just hide it.
         Overqualified to increase specificity.
     */
-    .svg--fixed-height .svg__fallback-text,
-    .svg--fluid .svg__fallback-text {
+    .svg__link .svg__fallback-text {
         display: none;
     }
 }
@@ -270,8 +271,7 @@ $fallback-svg--text-fontsize:     null !default;
         don't need it as it has `alt` text, so just hide it.
         Overqualified to increase specificity.
     */
-    .svg--fixed-height .svg__fallback-text,
-    .svg--fluid .svg__fallback-text {
+    .svg__link .svg__fallback-text {
         display: none;
     }
 }
