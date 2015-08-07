@@ -206,9 +206,11 @@ $fallback-svg--text-fontsize:     null !default;
     /*
         1. Force the children (object and fallback) text onto a single line. 
            Note they must be inline-block.
+        2. Reset `word-wrap` in case it's inherited from a parent.
     */
     .#{$name} .svg__link {
         white-space: nowrap; /* [1] */
+        word-wrap: normal; /* [2] */
         
         @if $fallback-svg--padding > 0 {
             padding: $fallback-svg--padding;
@@ -233,6 +235,8 @@ $fallback-svg--text-fontsize:     null !default;
            This hides it unless the image fails (in which case it collapses to the width of the text 
            that's revealed).
         2. Reset the white-space so it can form line-breaks.
+           (note this may force the height of the container to be greater than the image on 
+           short/wide images with long fallback text)
     */
     .#{$name} .svg__fallback-text {
         display: inline-block; /* [1] */
