@@ -1,34 +1,46 @@
 /*------------------------------------------------------------------------------------------------*\
-    Fall-Back SVG Pattern v1.0
+    Fall-Back SVG Pattern v0.1
 \*------------------------------------------------------------------------------------------------*/
 
 $fallback-svg--fixed-height:      100px !default;
 
 
 $fallback-svg--padding:           0 !default;
+//$fallback-svg--padding:           10px !default;
+
 
 
 $fallback-svg--border-width:      0 !default;
 $fallback-svg--border-style:      solid !default;
 $fallback-svg--border-color:      #333 !default;
+//$fallback-svg--border-width:      1px !default;
+
 
 
 $fallback-svg--link-bg-color:     transparent !default;
 $fallback-svg--link-bg-color-alt: transparent !default;
 
 
+// Set to null if you don't want to use this:
+$fallback-svg--text-width:        null !default;
+
+// Set to null if you don't want to use this:
+$fallback-svg--text-fontsize:     null !default;
+
 /*
     1. Make the link fit the content.
     2. Provide positioning context for the pseudo element.
     3. Remove underline on some older browsers (Android 2.x mainly)
+    4. Prevent fallback text from showing unless image fails to load.
 */
 .svg__link {
     display: inline-block; /* [1] */
     position: relative;    /* [2] */
     text-decoration: none; /* [3] */
-
+    overflow: hidden;      /* [4] */
+    
     background-color: $fallback-svg--link-bg-color;
-
+    
     @if $fallback-svg--border-width > 0 {
         border-width: $fallback-svg--border-width;
         border-style: $fallback-svg--border-style;
@@ -44,15 +56,15 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 }
 
 /*
-    Objects inside links prevent the link from functioning, this hack fixes
-    that. `pointer-events: none;` would solve it but support isn't good
+    Objects inside links prevent the link from functioning, this hack fixes 
+    that. `pointer-events: none;` would solve it but support isn't good 
     enough (http://caniuse.com/#search=pointer-events).
-
-    1. This is needed for IE9+ or hover effects don't work over images
+    
+    1. This is needed for IE9+ or hover effects don't work over images 
        embedded in the SVG.
 */
 .svg__link:after {
-    content: "";
+    content: ""; 
     position: absolute;
     top: 0;
     right: 0;
@@ -72,25 +84,18 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 }
 
 /*
-    Allows the fallback text to show ONLY if CSS is available AND the SVG fails to load (the PNG is 
-    hidden if SVG is supported so that won't be an issue).
+    1. The br is only useful for non-css fallback display, so we can hide it.
 */
-.svg__fallback-text-alpha::before {
-    content: attr(data-content);
+.svg__link br {
+    display: none; /* [1] */
 }
 
 /*
-    Hide the fallback text ONLY if CSS is available (but not from screenreaders).
+    1. But we may need to be able to insert line breaks inside the text to prevent 
+       the text from pushing the container to wide.
 */
-.svg__fallback-text-beta {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
+.svg__fallback-text br {
+    display: inline; /* [1] */
 }
 
 /*------ Fixed Height ------*/
@@ -98,54 +103,38 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     Set this to your required height.
     If you need more variants, create separate modification classes instead.
 */
-
-/*
-    NOTE: FF 32- (XP and Win8) seems to set a 3xheight width on initial page load / force refresh.
-    If any relevent properties are altered or page is normally refreshed, it snaps to the correct 
-    width. UNRESOLVED.
-*/
-
-
 @mixin svg--fixed-height($height, $name:"svg--fixed-height", $padding:$fallback-svg--padding, $border:$fallback-svg--border-width) {
     @if $padding > 0 {
-
+    
         .#{$name} {
             height: $height;
             max-height: $height;
         }
 
         $height: $height - ($padding * 2) - ($border * 2);
-
+        
         .#{$name} .svg__link,
         .#{$name} .svg__image {
             height: $height;
             max-height: $height;
         }
-
+        
         .#{$name} .svg__link {
             padding: $padding;
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
         }
-
+        
     } @else {
-
+    
         .#{$name},
         .#{$name} .svg__link,
         .#{$name} .svg__image {
             height: $height;
             max-height: $height;
         }
-
-    }
-
-    /*
-        1. Allow pattern to contract.
-    */
-    .#{$name} .svg__link,
-    .#{$name} .svg__image {
-        max-width: 100%; /* [1] */
+        
     }
     
     /*
@@ -153,10 +142,48 @@ $fallback-svg--link-bg-color-alt: transparent !default;
         1. IE6 - can be removed if unnecessary.
     */
     .#{$name} .svg__fallback-image {
-        max-width: 100%;
         max-height: $height;
-        height: auto;
         _height: $height; /* [1] */
+    }
+    
+    
+    /*
+        1. Allow pattern to contract.
+    */
+    .#{$name} .svg__link,
+    .#{$name} .svg__image {
+        max-width: 100%; /* [1] */
+    }
+
+    .#{$name} .svg__fallback-image {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /*
+        1. Force fallback text below object.
+        2. A problem with this technique arises if the fallback text is quite long. For the 
+           fixed-height version of the SVG fallback pattern, long fallback text forces the parent 
+           link to be wider than the SVG image.
+           If this problem occurs try you'll need to either reduce the line-length by reducing the 
+           font-size or adding `<br>`s in the fallback text, or assign a width to the 
+           `.svg__fallback-text` class that you know to be small enough to force the text to wrap.
+    */
+    .#{$name} .svg__fallback-text {
+        display: block; /* [1] */
+        
+        @if $fallback-svg--text-width != null {
+            width: $fallback-svg--text-width;    /* [2] */
+        }
+        
+        @if $fallback-svg--text-fontsize != null {
+            font-size: $fallback-svg--text-fontsize; /* [2] */
+        }
+        
+        @if $fallback-svg--padding > 0 {
+            position: relative;
+            bottom: -$fallback-svg--padding;
+        }
     }
 }
 
@@ -172,12 +199,20 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     .#{$name},
     .#{$name} .svg__link {
         display: block; /* [1] */
+        height: 100%;   /* [1] */
         width: 100%;    /* [1] */
     }
 
-
-    @if $fallback-svg--padding > 0 {
-        .#{$name} .svg__link {
+    /*
+        1. Force the children (object and fallback) text onto a single line. 
+           Note they must be inline-block.
+        2. Reset `word-wrap` in case it's inherited from a parent.
+    */
+    .#{$name} .svg__link {
+        white-space: nowrap; /* [1] */
+        word-wrap: normal; /* [2] */
+        
+        @if $fallback-svg--padding > 0 {
             padding: $fallback-svg--padding;
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
@@ -186,7 +221,7 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     }
 
     /*
-       1. Force the object and fallback image to proportionally fill their
+       1. Force the object and fallback image to proportionally fill their 
           containers, overriding attribute values.
     */
     .#{$name} .svg__image,
@@ -195,8 +230,19 @@ $fallback-svg--link-bg-color-alt: transparent !default;
         width: 100%;  /* [1] */
     }
 
-    @if $fallback-svg--padding > 0 {
-        .#{$name} .svg__fallback-text {
+    /*
+        1. Make the fallback text inline-block so it is forced to the right of the object.
+           This hides it unless the image fails (in which case it collapses to the width of the text 
+           that's revealed).
+        2. Reset the white-space so it can form line-breaks.
+           (note this may force the height of the container to be greater than the image on 
+           short/wide images with long fallback text)
+    */
+    .#{$name} .svg__fallback-text {
+        display: inline-block; /* [1] */
+        white-space: normal;   /* [2] */
+        
+        @if $fallback-svg--padding > 0 {
             position: relative;
             left: $fallback-svg--padding;
         }
@@ -207,16 +253,29 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 
 
 /*----------------------------------------*\
-    Old Browser Hacks
+    Old Browser Hacks - Optional
 \*----------------------------------------*/
+   
+/* IE8- hacks: */
+@media \0screen\,screen\9 {
+    /*
+        PNG fallbacks also show the text (which isn't what we want), but we
+        don't need it as it has `alt` text, so just hide it.
+        Overqualified to increase specificity.
+    */
+    .svg__link .svg__fallback-text {
+        display: none;
+    }
+}
 
 /* Old Android (2.3) hacks: */
 @media screen and (min-width: 0\-) {
     /*
-        Old Android supports ::pseudo elements but NOT SVG, thus both the PNG AND the fallback text
-        are shown, so we need to hide it: (overqualified to increase specificity.)
+        PNG fallbacks also show the text (which isn't what we want), but we
+        don't need it as it has `alt` text, so just hide it.
+        Overqualified to increase specificity.
     */
-    .svg__fallback-text-alpha {
+    .svg__link .svg__fallback-text {
         display: none;
     }
 }
