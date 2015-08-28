@@ -16,6 +16,12 @@ $fallback-svg--border-color:      #333 !default;
 $fallback-svg--link-bg-color:     transparent !default;
 $fallback-svg--link-bg-color-alt: transparent !default;
 
+/*
+	Make the container fit the content.
+*/
+.svg {
+    display: inline-block;
+}
 
 /*
     1. Make the link fit the content.
