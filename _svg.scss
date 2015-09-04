@@ -25,6 +25,14 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 }
 
 /*
+	Zero out any inherited margins and padding for child elements.
+*/
+.svg > * {
+    margin: 0;
+	padding: 0;
+}
+
+/*
     1. Make the link fit the content.
     2. Provide positioning context for the pseudo element.
     3. Remove underline on some older browsers (Android 2.x mainly)
