@@ -67,14 +67,18 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     background: rgba(0,0,0,0); /* [1] */
 }
 
-
 /*
     1. Remove gap below.
-    2. Prevent pointer-events blocking link action in supporting browsers.
+*/
+.svg__image {
+    vertical-align: top;  /* [1] */
+}
+
+/*
+    1. Prevent pointer-events blocking link action in supporting browsers.
 */
 .svg__link .svg__image {
-    vertical-align: top;  /* [1] */
-    pointer-events: none; /* [2] */
+    pointer-events: none; /* [1] */
 }
 
 /*
