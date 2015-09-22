@@ -26,8 +26,9 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 
 /*
 	Zero out any inherited margins and padding for child elements.
+    Note: `*:not(body)` avoids clash with Modernizr-added class.
 */
-.svg > * {
+.svg > *:not(body) {
     margin: 0;
 	padding: 0;
 }
