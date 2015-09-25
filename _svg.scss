@@ -18,8 +18,9 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 
 /*
 	Make the container fit the content.
+    Note: `*:not(body)` avoids clash with Modernizr-added class.
 */
-.svg {
+.svg:not(html) {
     display: inline-block;
 	max-width: 100%;
 }
