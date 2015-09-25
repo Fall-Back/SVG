@@ -27,11 +27,41 @@ if (!!(
                 if (obj.parentNode.className.indexOf('svg__link') == -1 || obj.parentNode.parentNode.className.indexOf('svg--fluid') >= 0) {
                     continue;
                 }
-                obj.style.maxWidth          = 'none';
-                obj.style.minWidth          = '0';
-                obj.parentNode.style.width  = '100%';
-                obj.parentNode.style.width  = obj.offsetWidth + 'px';
-                obj.style.maxWidth          = '100%';
+                
+                
+                // If the .svg container has a width of 'auto', things don't work, so we need to 
+                // temporarily set the width to 100% so the children can expand to their natural
+                // width:
+                var svg = obj.parentNode.parentNode;
+                // Is the width 'auto' or not set.
+                if (svg.style.width == '' || svg.style.width == 'auto') {
+                    svg.style.width  = '100%';
+                }
+                
+                
+                // Also, if there's an auto width parent to the .svg container (e.g. for styling a
+                // box or whatever) we need to do the same. Apply the .svg-container class to that
+                // element.
+                var container = svg.parentNode;
+                // Is the width 'auto' or not set.
+                if (container.className.indexOf('svg-container') > 0 && (container.style.width == '' || container.style.width == 'auto')) {
+                    container.style.width  = '100%';
+                }
+                
+                
+                obj.style.maxWidth         = 'none';
+                obj.style.minWidth         = '0';
+                obj.parentNode.style.width = '100%';
+                obj.parentNode.style.width = obj.offsetWidth + 'px';
+                obj.style.maxWidth         = '100%';
+                
+
+                // Reset the container width:
+                container.style.width  = '';
+                
+                
+                // Reset the svg width:
+                svg.style.width  = '';
             }
         }
     }(window.onload));
