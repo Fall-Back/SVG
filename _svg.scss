@@ -20,6 +20,10 @@ $fallback-svg--border-width:      0 !default;
 $fallback-svg--border-style:      solid !default;
 $fallback-svg--border-color:      #333 !default;
 
+$fallback-svg--border-width--alt: $fallback-svg--border-width !default;
+$fallback-svg--border-style--alt: $fallback-svg--border-width !default;
+$fallback-svg--border-color--alt: $fallback-svg--border-width !default;
+
 
 $fallback-svg--link-bg-color:     transparent !default;
 $fallback-svg--link-bg-color-alt: transparent !default;
@@ -54,11 +58,9 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 
         background-color: $fallback-svg--link-bg-color;
 
-        @if $fallback-svg--border-width > 0 {
-            border-width: $fallback-svg--border-width;
-            border-style: $fallback-svg--border-style;
-            border-color: $fallback-svg--border-color;
-        }
+        border-width: $fallback-svg--border-width;
+        border-style: $fallback-svg--border-style;
+        border-color: $fallback-svg--border-color;
     }
 
     .svg .svg__link:hover,
@@ -66,6 +68,11 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     .svg .svg__link:focus {
         text-decoration: none;
         background-color: $fallback-svg--link-bg-color-alt;
+        
+        // Repeat border setting even if 0 to override other hover rules:
+        border-width: $fallback-svg--border-width--alt;
+        border-style: $fallback-svg--border-style--alt;
+        border-color: $fallback-svg--border-color--alt;
     }
 
     /*
