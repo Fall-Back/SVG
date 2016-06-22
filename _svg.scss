@@ -31,10 +31,12 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 /*
 	Make the container fit the content.
     Note: `*:not(body)` avoids clash with Modernizr-added class.
+    1. IE9 needs this to avoid extra height. (Others too?)
 */
 .svg:not(html) {
     display: inline-block;
 	max-width: 100%;
+    vertical-align: middle; /* [1] */
 }
 
 /*
