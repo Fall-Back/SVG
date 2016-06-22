@@ -52,11 +52,13 @@ $fallback-svg--link-bg-color-alt: transparent !default;
         1. Make the link fit the content.
         2. Provide positioning context for the pseudo element.
         3. Remove underline on some older browsers (Android 2.x mainly)
+        4. IE9 needs this to avoid extra height. (Others too?)
     */
     .svg .svg__link {
-        display: inline-block; /* [1] */
-        position: relative;    /* [2] */
-        text-decoration: none; /* [3] */
+        display: inline-block;  /* [1] */
+        position: relative;     /* [2] */
+        text-decoration: none;  /* [3] */
+        vertical-align: middle; /* [4] */
 
         background-color: $fallback-svg--link-bg-color;
 
