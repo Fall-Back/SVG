@@ -1,12 +1,12 @@
 /*------------------------------------------------------------------------------------------------*\
     Fall-Back SVG Pattern v1.0
-    
+
     Clarification for self:
     Since this pattern is intented for use on logos, and since logos are an integral part of
     branding, this pattern is not ONLY intended as a CSS fallback.
     The markup is really important to provide an image of the logo even if CSS fails or is cut.
-    
-    However, since these patterns are intended for use with the CSS Mustard Cut (original) then 
+
+    However, since these patterns are intended for use with the CSS Mustard Cut (original) then
     styles for older browsers can be omitted her since they won't load.
 \*------------------------------------------------------------------------------------------------*/
 
@@ -72,7 +72,7 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     .svg .svg__link:focus {
         text-decoration: none;
         background-color: $fallback-svg--link-bg-color-alt;
-        
+
         // Repeat border setting even if 0 to override other hover rules:
         border-width: $fallback-svg--border-width--alt;
         border-style: $fallback-svg--border-style--alt;
@@ -112,7 +112,7 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     }
 
     /*
-        Allows the fallback text to show ONLY if CSS is available AND the SVG fails to load (the PNG is 
+        Allows the fallback text to show ONLY if CSS is available AND the SVG fails to load (the PNG is
         hidden if SVG is supported so that won't be an issue).
     */
     .svg .svg__fallback-text-alpha::before {
@@ -141,7 +141,7 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 
     /*
         NOTE: FF 32- (XP and Win8) seems to set a 3xheight width on initial page load / force refresh.
-        If any relevent properties are altered or page is normally refreshed, it snaps to the correct 
+        If any relevent properties are altered or page is normally refreshed, it snaps to the correct
         width. UNRESOLVED.
     */
 
@@ -187,7 +187,7 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     .#{$name} .svg__image {
         max-width: 100%; /* [1] */
     }
-    
+
     /*
         Allow the fallback image to scale properly.
         1. IE6 - can be removed if unnecessary.
