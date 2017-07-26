@@ -1,5 +1,5 @@
+// Fall-Back SVG Pattern v1.0.0
 /*------------------------------------------------------------------------------------------------*\
-    Fall-Back SVG Pattern v1.0
 
     Clarification for self:
     Since this pattern is intented for use on logos, and since logos are an integral part of
@@ -7,7 +7,7 @@
     The markup is really important to provide an image of the logo even if CSS fails or is cut.
 
     However, since these patterns are intended for use with the CSS Mustard Cut (original) then
-    styles for older browsers can be omitted her since they won't load.
+    styles for older browsers are omitted here since they won't load.
 \*------------------------------------------------------------------------------------------------*/
 
 $fallback-svg--fixed-height:      100px !default;
