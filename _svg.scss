@@ -163,7 +163,6 @@ $fallback-svg--link-bg-color-alt: transparent !default;
         }
 
         .#{$name} .svg__link {
-            padding: $padding;
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
@@ -177,7 +176,6 @@ $fallback-svg--link-bg-color-alt: transparent !default;
             height: $height;
             max-height: $height;
         }
-
     }
 
     /*
@@ -197,6 +195,11 @@ $fallback-svg--link-bg-color-alt: transparent !default;
         max-height: $height;
         height: auto;
         //_height: $height; /* [1] */
+    }
+    
+    .#{$name} .svg__link {
+        padding: $padding;
+        border-width: $border;
     }
 }
 
