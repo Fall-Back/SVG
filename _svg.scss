@@ -201,6 +201,12 @@ $fallback-svg--link-bg-color-alt: transparent !default;
         padding: $padding;
         border-width: $border;
     }
+    
+    .#{$name} .svg__link:hover,
+    .#{$name} .svg__link:active,
+    .#{$name} .svg__link:focus {
+        border-width: $border;
+    }
 }
 
 @include svg--fixed-height($fallback-svg--fixed-height);
