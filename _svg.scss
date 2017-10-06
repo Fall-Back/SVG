@@ -8,6 +8,8 @@
 
     However, since these patterns are intended for use with the CSS Mustard Cut (original) then
     styles for older browsers are omitted here since they won't load.
+	
+	@TODO Expand mixins to accept all vars for specfic instances.
 \*------------------------------------------------------------------------------------------------*/
 
 $fallback-svg--fixed-height:      100px !default;
