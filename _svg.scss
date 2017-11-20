@@ -8,8 +8,6 @@
 
     However, since these patterns are intended for use with the CSS Mustard Cut (original) then
     styles for older browsers are omitted here since they won't load.
-	
-	@TODO Expand mixins to accept all vars for specfic instances.
 \*------------------------------------------------------------------------------------------------*/
 
 $fallback-svg--fixed-height:      100px !default;
@@ -50,6 +48,21 @@ $fallback-svg--link-bg-color-alt: transparent !default;
 	padding: 0;
 }
 
+/*
+    Set the default link styles based on the settings.
+    The mixin allows variants to be easily generated.
+*/
+@mixin svg__link(
+    $bg-color          : $fallback-svg--link-bg-color,
+    $bg-color-alt      : $fallback-svg--link-bg-color-alt,
+    $border-width      : $fallback-svg--border-width,
+    $border-width--alt : $fallback-svg--border-width--alt,
+    $border-style      : $fallback-svg--border-style,
+    $border-style--alt : $fallback-svg--border-style--alt,
+    $border-color      : $fallback-svg--border-color,
+    $border-color--alt : $fallback-svg--border-color--alt
+) {
+
     /*
         1. Make the link fit the content.
         2. Provide positioning context for the pseudo element.
@@ -80,6 +93,8 @@ $fallback-svg--link-bg-color-alt: transparent !default;
         border-style: $fallback-svg--border-style--alt;
         border-color: $fallback-svg--border-color--alt;
     }
+}
+@include svg__link();
 
     /*
         Objects inside links prevent the link from functioning, this hack fixes
@@ -148,7 +163,12 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     */
 
 
-@mixin svg--fixed-height($height, $name:"svg--fixed-height", $padding:$fallback-svg--padding, $border:$fallback-svg--border-width) {
+@mixin svg--fixed-height(
+    $height  : $fallback-svg--fixed-height,
+    $name    : "svg--fixed-height",
+    $padding : $fallback-svg--padding,
+    $border  : $fallback-svg--border-width
+) {
     @if $padding > 0 {
 
         .#{$name} {
@@ -211,12 +231,14 @@ $fallback-svg--link-bg-color-alt: transparent !default;
     }
 }
 
-@include svg--fixed-height($fallback-svg--fixed-height);
+@include svg--fixed-height();
 
 
 /*------ Fluid ------*/
 //@mixin svg-fluid($height, $name:"svg--fixed-height", $padding:$fallback-svg--padding, $border:$fallback-svg--border-width) {
-@mixin svg--fluid($name:"svg--fluid") {
+@mixin svg--fluid(
+    $name : "svg--fluid"
+) {
     /*
        1. Force the svg wrapper and link to fill their containers.
     */

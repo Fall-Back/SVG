@@ -6,8 +6,6 @@
 
     However, since these patterns are intended for use with the CSS Mustard Cut (original) then
     styles for older browsers are omitted here since they won't load.
-	
-	@TODO Expand mixins to accept all vars for specfic instances.
 \*------------------------------------------------------------------------------------------------*/
 /*
 	Make the container fit the content.
@@ -28,6 +26,10 @@
   margin: 0;
   padding: 0; }
 
+/*
+    Set the default link styles based on the settings.
+    The mixin allows variants to be easily generated.
+*/
 /*
         1. Make the link fit the content.
         2. Provide positioning context for the pseudo element.
