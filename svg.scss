@@ -1,0 +1,5 @@
+@import "_svg";
+
+@include svg--fixed-height(50px, "svg--fixed-height--small");
+//@include svg--fixed-height(33px, "svg-logo");
+@include svg--fixed-height(100%, "svg--fixed-height--percent");

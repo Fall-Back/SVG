@@ -1,0 +1,241 @@
+/*------------------------------------------------------------------------------------------------*
+    Clarification for self:
+    Since this pattern is intented for use on logos, and since logos are an integral part of
+    branding, this pattern is not ONLY intended as a CSS fallback.
+    The markup is really important to provide an image of the logo even if CSS fails or is cut.
+
+    However, since these patterns are intended for use with the CSS Mustard Cut (original) then
+    styles for older browsers are omitted here since they won't load.
+\*------------------------------------------------------------------------------------------------*/
+/*
+	Make the container fit the content.
+    Note: `*:not(body)` avoids clash with Modernizr-added class.
+    1. IE9 needs this to avoid extra height. (Others too?)
+*/
+.svg:not(html) {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: middle;
+  /* [1] */ }
+
+/*
+	Zero out any inherited margins and padding for child elements.
+    Note: `*:not(body)` avoids clash with Modernizr-added class.
+*/
+.svg > *:not(body) {
+  margin: 0;
+  padding: 0; }
+
+/*
+    Set the default link styles based on the settings.
+    The mixin allows variants to be easily generated.
+*/
+/*
+        1. Make the link fit the content.
+        2. Provide positioning context for the pseudo element.
+        3. Remove underline on some older browsers (Android 2.x mainly)
+        4. IE9 needs this to avoid extra height. (Others too?)
+    */
+.svg .svg__link {
+  display: inline-block;
+  /* [1] */
+  position: relative;
+  /* [2] */
+  text-decoration: none;
+  /* [3] */
+  vertical-align: middle;
+  /* [4] */
+  background-color: transparent;
+  border-width: 0;
+  border-style: solid;
+  border-color: #333; }
+
+.svg .svg__link:hover,
+.svg .svg__link:active,
+.svg .svg__link:focus {
+  text-decoration: none;
+  background-color: transparent;
+  border-width: 0;
+  border-style: 0;
+  border-color: 0; }
+
+/*
+        Objects inside links prevent the link from functioning, this hack fixes
+        that. `pointer-events: none;` would solve it but support isn't good
+        enough (http://caniuse.com/#search=pointer-events).
+
+        1. This is needed for IE9+ or hover effects don't work over images
+           embedded in the SVG.
+    */
+.svg .svg__link:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+  /* [1] */ }
+
+/*
+        1. Remove gap below.
+    */
+.svg .svg__image {
+  vertical-align: top;
+  /* [1] */ }
+
+/*
+        1. Prevent pointer-events blocking link action in supporting browsers.
+    */
+.svg .svg__link .svg__image {
+  pointer-events: none;
+  /* [1] */ }
+
+/*
+        Allows the fallback text to show ONLY if CSS is available AND the SVG fails to load (the PNG is
+        hidden if SVG is supported so that won't be an issue).
+    */
+.svg .svg__fallback-text-alpha::before {
+  content: attr(data-content); }
+
+/*
+        Hide the fallback text ONLY if CSS is available (but not from screenreaders).
+    */
+.svg .svg__fallback-text-beta {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+/*------ Fixed Height ------*/
+/*
+        Set this to your required height.
+        If you need more variants, create separate modification classes instead.
+    */
+/*
+        NOTE: FF 32- (XP and Win8) seems to set a 3xheight width on initial page load / force refresh.
+        If any relevent properties are altered or page is normally refreshed, it snaps to the correct
+        width. UNRESOLVED.
+    */
+.svg--fixed-height,
+.svg--fixed-height .svg__link,
+.svg--fixed-height .svg__image {
+  height: 100px;
+  max-height: 100px; }
+
+/*
+        1. Allow pattern to contract.
+    */
+.svg--fixed-height .svg__link,
+.svg--fixed-height .svg__image {
+  max-width: 100%;
+  /* [1] */ }
+
+/*
+        Allow the fallback image to scale properly.
+        1. IE6 - can be removed if unnecessary.
+    */
+.svg--fixed-height .svg__fallback-image {
+  max-width: 100%;
+  max-height: 100px;
+  height: auto; }
+
+.svg--fixed-height .svg__link {
+  padding: 0;
+  border-width: 0; }
+
+.svg--fixed-height .svg__link:hover,
+.svg--fixed-height .svg__link:active,
+.svg--fixed-height .svg__link:focus {
+  border-width: 0; }
+
+/*------ Fluid ------*/
+/*
+       1. Force the svg wrapper and link to fill their containers.
+    */
+.svg--fluid,
+.svg--fluid .svg__link {
+  display: block;
+  /* [1] */
+  width: 100%;
+  /* [1] */ }
+
+/*
+       1. Force the object and fallback image to proportionally fill their
+          containers, overriding attribute values.
+    */
+.svg--fluid .svg__image,
+.svg--fluid .svg__fallback-image {
+  height: auto;
+  /* [1] */
+  width: 100%;
+  /* [1] */ }
+
+/*------------------------------------------------------------------------------------------------*/
+.svg--fixed-height--small,
+.svg--fixed-height--small .svg__link,
+.svg--fixed-height--small .svg__image {
+  height: 50px;
+  max-height: 50px; }
+
+/*
+        1. Allow pattern to contract.
+    */
+.svg--fixed-height--small .svg__link,
+.svg--fixed-height--small .svg__image {
+  max-width: 100%;
+  /* [1] */ }
+
+/*
+        Allow the fallback image to scale properly.
+        1. IE6 - can be removed if unnecessary.
+    */
+.svg--fixed-height--small .svg__fallback-image {
+  max-width: 100%;
+  max-height: 50px;
+  height: auto; }
+
+.svg--fixed-height--small .svg__link {
+  padding: 0;
+  border-width: 0; }
+
+.svg--fixed-height--small .svg__link:hover,
+.svg--fixed-height--small .svg__link:active,
+.svg--fixed-height--small .svg__link:focus {
+  border-width: 0; }
+
+.svg--fixed-height--percent,
+.svg--fixed-height--percent .svg__link,
+.svg--fixed-height--percent .svg__image {
+  height: 100%;
+  max-height: 100%; }
+
+/*
+        1. Allow pattern to contract.
+    */
+.svg--fixed-height--percent .svg__link,
+.svg--fixed-height--percent .svg__image {
+  max-width: 100%;
+  /* [1] */ }
+
+/*
+        Allow the fallback image to scale properly.
+        1. IE6 - can be removed if unnecessary.
+    */
+.svg--fixed-height--percent .svg__fallback-image {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto; }
+
+.svg--fixed-height--percent .svg__link {
+  padding: 0;
+  border-width: 0; }
+
+.svg--fixed-height--percent .svg__link:hover,
+.svg--fixed-height--percent .svg__link:active,
+.svg--fixed-height--percent .svg__link:focus {
+  border-width: 0; }
